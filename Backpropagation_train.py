@@ -9,6 +9,7 @@ from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dense 
 from keras.optimizers import Adam 
+from joblib import dump
 
 def backpropagation_train(df): 
 
@@ -20,8 +21,6 @@ def backpropagation_train(df):
     
     X_train_tfidf = tfidf_vectorizer.fit_transform(train_df['Text'])
 
-    
-    X_test_tfidf = tfidf_vectorizer.transform(test_df['Text'])
 
     # Converting sparse matrices to dense arrays
     X_train_dense = X_train_tfidf.toarray()
@@ -49,7 +48,7 @@ def backpropagation_train(df):
     #    validation_data=(X_test_dense, y_test_encoded)
    # )
     
-    model.fit(X_train_tfidf, y_train_encoded, epochs=5, batch_size=32)
+    model.fit(X_train_tfidf, y_train_encoded, epochs=30, batch_size=32)
 
     return model 
 

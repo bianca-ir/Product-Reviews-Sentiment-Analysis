@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
+from joblib import dump
 
 def SVM_train(df): 
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
@@ -15,7 +16,7 @@ def SVM_train(df):
     y_train = train_df['Label']
     
  
-    svm_model = SVC(kernel='linear')
+    svm_model = SVC(C = 1.0, kernel='rbf', gamma='scale') # better results with rbf kernel 
     svm_model.fit(X_train_tfidf, y_train)
 
     return svm_model 
