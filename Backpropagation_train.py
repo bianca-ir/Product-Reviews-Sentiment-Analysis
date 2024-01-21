@@ -11,15 +11,12 @@ from keras.layers import Dense
 from keras.optimizers import Adam 
 from joblib import dump
 from DataPreprocessing import process_file
+from keras.models import model_from_json
 
 def backpropagation_train(): 
 
-    file_path = 'trainLarge.txt' #to be replaced with your own local path
-    result_object = process_file(file_path)
-    
-    df = pd.DataFrame(result_object, columns=['Label', 'Text'])
 
-    train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
+    train_df = pd.read_csv('Dataset/train_data.csv')
 
     # Converting into numerical data using TF-IDF technique 
     tfidf_vectorizer = TfidfVectorizer(max_features=5000)  
@@ -45,19 +42,20 @@ def backpropagation_train():
 
     # Compile the model
     model.compile(optimizer=Adam(learning_rate=0.001), loss='binary_crossentropy', metrics=['accuracy'])
-
-    # Train the model 
-   # history = model.fit(
-    #    X_train_dense, y_train_encoded,
-    #    epochs=5,
-    #    batch_size=32,
-    #    validation_data=(X_test_dense, y_test_encoded)
-   # )
     
-    model.fit(X_train_tfidf, y_train_encoded, epochs=30, batch_size=32)
+    model.fit(X_train_dense, y_train_encoded, epochs=30, batch_size=32)
+
+    save_model(model)
 
     return model 
 
-    
+def save_model(model): 
+    model_json = model.to_json()
+    with open('saved_models/backpropagation_architecture.json', 'w') as json_file:
+        json_file.write(model_json)  
+    model.save_weights('saved_models/backpropagation_weights.h5')
+
+
+
 
 

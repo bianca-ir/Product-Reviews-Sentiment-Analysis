@@ -16,7 +16,8 @@ def process_file(file_path):
                 reviews.append((label, cleaned_text))
     return reviews
 
-file_path = 'C:/Users/andre/Documents/GitHub/Product-Reviews-Sentiment-Analysis/Dataset/train/trainMedium.txt' #to be replaced with your own local path
+#file_path = 'C:/Users/andre/Documents/GitHub/Product-Reviews-Sentiment-Analysis/Dataset/train/trainMedium.txt' #to be replaced with your own local path
+file_path = 'Dataset/train/trainLarge.txt'
 result_object = process_file(file_path)
 #print(result_object[0]) #print(result_object[0][1]['cats']['pos'])
 

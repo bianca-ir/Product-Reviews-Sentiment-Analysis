@@ -4,17 +4,35 @@ from joblib import load
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+from tensorflow import keras 
+from keras.models import model_from_json
 #from DataPreprocessing import process_file
+from Backpropagation_train import backpropagation_train
+from SVM_train import SVM_train
 
 
 def test_model():
+
+    SVM_train()  
+
     train_df = pd.read_csv('Dataset/test_data.csv')
     test_df = pd.read_csv('Dataset/test_data.csv')
 
-    model_path = 'saved_models/svm_model.joblib'  # to be replaced with your own local path
 
-    # Load the model
-    model = load(model_path)
+    # Load the SVM model
+    svm_model_path = 'saved_models/svm_model.joblib'  # to be replaced with your own local path
+    svm_model = load(svm_model_path)
+
+
+    # Load the backpropagation model 
+    json_file = open('saved_models/backpropagation_architecture.json', 'r')
+    loaded_model_json = json_file.read()
+    json_file.close()
+    loaded_model = model_from_json(loaded_model_json)
+
+    # Load model weights from HDF5 file
+    loaded_model.load_weights('saved_models/backpropagation_weights.h5')
+    loaded_model.compile(optimizer='adam', loss='...', metrics=['accuracy', 'precision',  'recall'])
 
 
     # Recreate the TF-IDF vectorizer and fit on the test data
@@ -31,7 +49,7 @@ def test_model():
     y_test_encoded = label_encoder.transform(test_df['Label'])
 
     # Predictions on test data
-    predictions_str = model.predict(X_test_dense)
+    predictions_str = svm_model.predict(X_test_dense)
     predictions_numeric = label_encoder.transform(predictions_str)  # Convert to numeric
 
 
