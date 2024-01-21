@@ -3,8 +3,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 from joblib import dump
+from DataPreprocessing import process_file
 
-def SVM_train(df): 
+def SVM_train(): 
+    file_path = 'trainLarge.txt' #to be replaced with your own local path
+    result_object = process_file(file_path)
+    
+    df = pd.DataFrame(result_object, columns=['Label', 'Text'])
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
     # Converting into numerical data using TF-IDF technique 

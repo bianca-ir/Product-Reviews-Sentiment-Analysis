@@ -10,8 +10,14 @@ from keras.models import Sequential
 from keras.layers import Dense 
 from keras.optimizers import Adam 
 from joblib import dump
+from DataPreprocessing import process_file
 
-def backpropagation_train(df): 
+def backpropagation_train(): 
+
+    file_path = 'trainLarge.txt' #to be replaced with your own local path
+    result_object = process_file(file_path)
+    
+    df = pd.DataFrame(result_object, columns=['Label', 'Text'])
 
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
