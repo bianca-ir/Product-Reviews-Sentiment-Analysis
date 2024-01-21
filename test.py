@@ -3,25 +3,13 @@ import pandas as pd
 from joblib import load
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
-from tensorflow import keras 
 from keras.models import model_from_json
-#from DataPreprocessing import process_file
-from Backpropagation_train import backpropagation_train
-from SVM_train import SVM_train
 
 
-def test_model():
+def test_model_backt():
 
-    SVM_train()  
-
-    train_df = pd.read_csv('Dataset/test_data.csv')
+    train_df = pd.read_csv('Dataset/train_data.csv')
     test_df = pd.read_csv('Dataset/test_data.csv')
-
-
-    # Load the SVM model
-    svm_model_path = 'saved_models/svm_model.joblib'  # to be replaced with your own local path
-    svm_model = load(svm_model_path)
 
 
     # Load the backpropagation model 
@@ -48,11 +36,44 @@ def test_model():
     # Encoding labels for test data
     y_test_encoded = label_encoder.transform(test_df['Label'])
 
-    # Predictions on test data
+
+
+    # Predictions on test data BACKPROPAGATION
+    predictions_prob = loaded_model.predict(X_test_dense)
+    predictions_numeric = (predictions_prob > 0.5).astype(int)  # Apply threshold
+    print_evaluation(y_test_encoded,predictions_numeric)
+
+
+
+def test_model_svm():
+
+    train_df = pd.read_csv('Dataset/train_data.csv')
+    test_df = pd.read_csv('Dataset/test_data.csv')
+
+    # Load the SVM model
+    svm_model_path = 'saved_models/svm_model.joblib'  # to be replaced with your own local path
+    svm_model = load(svm_model_path)
+
+
+    # Recreate the TF-IDF vectorizer and fit on the test data
+    tfidf_vectorizer = TfidfVectorizer(max_features=5000)
+    X_test_tfidf = tfidf_vectorizer.fit_transform(test_df['Text'])
+
+    # Converting sparse matrices to dense arrays if needed
+    X_test_dense = X_test_tfidf.toarray()
+
+    # Create a new label encoder and fit on the training labels
+    label_encoder = LabelEncoder()
+    label_encoder.fit(train_df['Label'])
+    # Encoding labels for test data
+    y_test_encoded = label_encoder.transform(test_df['Label'])
+
+    # Predictions on test data SVM
     predictions_str = svm_model.predict(X_test_dense)
     predictions_numeric = label_encoder.transform(predictions_str)  # Convert to numeric
+    print_evaluation(y_test_encoded,predictions_numeric)
 
-
+def print_evaluation(y_test_encoded,predictions_numeric):
     # Evaluate the model
     accuracy = accuracy_score(y_test_encoded, predictions_numeric)
     precision = precision_score(y_test_encoded, predictions_numeric)
@@ -67,9 +88,6 @@ def test_model():
     print("Confusion Matrix:")
     print(confusion)
 
-
-
-
 #file_path = 'D:\school-projects\year4sem1\Product-Reviews-Sentiment-Analysis/trainLarge.txt'  # to be replaced with your own local path
 #result_object = process_file(file_path)
 #df = pd.DataFrame(result_object, columns=['Label', 'Text'])
@@ -80,7 +98,10 @@ def test_model():
 #test_df.to_csv('test_data.csv', index=False)
 
 
-# Test the model
-print("testing")
-test_model()
+# Test the models
+print("testing backpropagation")
+test_model_backt()
+print("testing svm")
+test_model_svm()
+
 

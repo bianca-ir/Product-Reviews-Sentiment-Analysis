@@ -14,3 +14,12 @@ Confusion Matrix:
 [[338 167]
  [312 183]]
 
+Results for Backpropagation: 
+Accuracy: 0.5380
+Precision: 0.5450
+Recall: 0.4040
+F1 Score: 0.4640
+Confusion Matrix:
+[[338 167]
+ [295 200]]
+
