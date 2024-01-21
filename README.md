@@ -4,3 +4,13 @@ This is the dataset we will use for the Data Mining project. The .tsv file conta
 Sentiment analysis task will be performed on this dataset. 
 
 Source of data: https://www.kaggle.com/datasets/sid321axn/amazon-alexa-reviews/
+
+Results for SVM model:
+Accuracy: 0.5210
+Precision: 0.5229
+Recall: 0.3697
+F1 Score: 0.4331
+Confusion Matrix:
+[[338 167]
+ [312 183]]
+
