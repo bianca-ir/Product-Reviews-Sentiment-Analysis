@@ -20,26 +20,25 @@ Source of data: https://www.kaggle.com/datasets/sid321axn/amazon-alexa-reviews/
 
 #Running the Experiments
 ##Data Preprocessing
-First, preprocess your data: `python DataPreprocessing.py`
+First, preprocess your data: `python .\DataPreprocessing.py`
 
 ###Training the Models
-To train the SVM model: `python SVM_train.py`
+To train the SVM model: `python .\SVM_train.py`
 
-To train the Backpropagation Neural Network model: `python Backpropagation_train.py`
+To train the Backpropagation Neural Network model: `python .\Backpropagation_train.py`
 
 ###Testing the Models
 After training, you can test the models:
 
-For SVM: `python SVM_test.py`
+For SVM: `python .\SVM_test.py`
 
-For Backpropagation Neural Network:`python Backpropagation_test.py`
+For Backpropagation Neural Network:`python .\Backpropagation_test.py`
 
 ##Results
+
+We also added a predictor script, which can be run using the command: `python .\predictor.py --text {your_string_review}`
+
 The results including accuracy, precision, recall, and F1-score will be displayed in the console after running the test scripts.
-
-
-
-
 
 Results for SVM model:
 Accuracy: 0.96
