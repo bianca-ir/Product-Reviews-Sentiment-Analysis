@@ -42,20 +42,19 @@ def backpropagation_train():
 
     # Compile the model
     model.compile(optimizer=Adam(learning_rate=0.001), loss='binary_crossentropy', metrics=['accuracy'])
-    
-    model.fit(X_train_dense, y_train_encoded, epochs=30, batch_size=32)
 
-    save_model(model)
+    model.fit(X_train_dense, y_train_encoded, epochs=30, batch_size=32, validation_split=0.1)
 
-    return model 
+    return model, tfidf_vectorizer, label_encoder
 
-def save_model(model): 
-    model_json = model.to_json()
-    with open('saved_models/backpropagation_architecture.json', 'w') as json_file:
-        json_file.write(model_json)  
-    model.save_weights('saved_models/backpropagation_weights.h5')
+def save_model(model, tfidf_vectorizer, label_encoder, model_path='saved_models/backpropagation_best_model', vectorizer_path='saved_models/tfidf_bp_vectorizer.joblib', encoder_path='saved_models/label_encoder.joblib'):
+    model.save(f'{model_path}.h5')
 
+    dump(tfidf_vectorizer, vectorizer_path)
+    dump(label_encoder, encoder_path)
 
+model, tfidf_vectorizer, label_encoder = backpropagation_train()
+save_model(model, tfidf_vectorizer, label_encoder)
 
 
 
