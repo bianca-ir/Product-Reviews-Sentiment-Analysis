@@ -7,7 +7,7 @@ from DataPreprocessing import process_file
 
 def SVM_train(): 
   
-    file_path = 'Dataset/train/trainLarge.txt' #to be replaced with your own local path
+    file_path = 'Dataset/train/trainLarge.txt' 
     result_object = process_file(file_path)
 
     df = pd.DataFrame(result_object, columns=['Label', 'Text'])
