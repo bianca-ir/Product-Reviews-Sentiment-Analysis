@@ -27,7 +27,7 @@ def test_model_backt():
     tfidf_vectorizer = TfidfVectorizer(max_features=5000)
     X_test_tfidf = tfidf_vectorizer.fit_transform(test_df['Text'])
 
-    # Converting sparse matrices to dense arrays if needed
+    # Converting sparse matrices to dense arrays 
     X_test_dense = X_test_tfidf.toarray()
 
     # Create a new label encoder and fit on the training labels
@@ -40,7 +40,7 @@ def test_model_backt():
 
     # Predictions on test data BACKPROPAGATION
     predictions_prob = loaded_model.predict(X_test_dense)
-    predictions_numeric = (predictions_prob > 0.5).astype(int)  # Apply threshold
+    predictions_numeric = (predictions_prob > 0.5).astype(int)  
     print_evaluation(y_test_encoded,predictions_numeric)
 
 
@@ -51,7 +51,7 @@ def test_model_svm():
     test_df = pd.read_csv('Dataset/test_data.csv')
 
     # Load the SVM model
-    svm_model_path = 'saved_models/svm_model.joblib'  # to be replaced with your own local path
+    svm_model_path = 'saved_models/svm_model.joblib'  
     svm_model = load(svm_model_path)
 
 
@@ -59,7 +59,7 @@ def test_model_svm():
     tfidf_vectorizer = TfidfVectorizer(max_features=5000)
     X_test_tfidf = tfidf_vectorizer.fit_transform(test_df['Text'])
 
-    # Converting sparse matrices to dense arrays if needed
+    # Converting sparse matrices to dense arrays
     X_test_dense = X_test_tfidf.toarray()
 
     # Create a new label encoder and fit on the training labels
@@ -88,14 +88,7 @@ def print_evaluation(y_test_encoded,predictions_numeric):
     print("Confusion Matrix:")
     print(confusion)
 
-#file_path = 'D:\school-projects\year4sem1\Product-Reviews-Sentiment-Analysis/trainLarge.txt'  # to be replaced with your own local path
-#result_object = process_file(file_path)
-#df = pd.DataFrame(result_object, columns=['Label', 'Text'])
-#train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
-#save the training and testing data
-#train_df.to_csv('train_data.csv', index=False)
-#test_df.to_csv('test_data.csv', index=False)
 
 
 # Test the models
