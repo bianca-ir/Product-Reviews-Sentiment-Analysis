@@ -10,12 +10,11 @@ text = " ".join(args.text)
 
 loaded_model, tfidf_vectorizer = load("saved_models/svm_saved_model.joblib")
 
-# Load training data for fitting the vectorizer (assuming you have access to the training data)
-# If you don't have access to training data, you can use a small sample or create a new vectorizer with max_features=5000
-# and fit it on a representative dataset.
+# Load training data for fitting the vectorizer 
+
 test_df = pd.read_csv('Dataset/test_data.csv')
 
-# Recreate the TF-IDF vectorizer and fit on the test data
+
 X_test_tfidf = tfidf_vectorizer.transform(test_df['Text'])
 
 X_test_tfidf = tfidf_vectorizer.transform([text])
